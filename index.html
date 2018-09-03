@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>NeoWorld Tool</title>
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="form-validation.css" rel="stylesheet">
+    <style type="text/css">
+    	#rewardme {
+    		position:fixed;
+    		top: 100%;
+    		left:100%;
+    		width:200px;
+  			height:200px;
+  			margin-left:-300px;
+  			margin-top: -260px; 
+    	}
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="py-3 text-center">
+        <h2>NeoWorld 藏宝图寻宝神器</h2>
+        <p class="lead" style="font-size: 14px; color: #CC6600">感谢支持西部世界！刚刚优化了寻宝算法，提升了寻宝精确度，希望对朋友们有所帮助！</p>
+      </div>
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">藏宝图寻宝</h4>
+          <form class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">去(0,0)位置探测宝藏距离</label>
+                <input type="text" class="form-control" id="dist0" placeholder="去(0,0)探测宝藏距离" value="" required>
+                <div class="invalid-feedback">
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">去(0,30)位置探测宝藏距离</label>
+                <input type="text" class="form-control" id="dist1" placeholder="去(0,30)探测宝藏距离" value="" required>
+                <div class="invalid-feedback">
+                </div>
+              </div>
+            </div>
+           <button class="btn btn-primary btn-lg btn-block" id = "calc" type="button">计算宝藏位置</button>
+          </form>
+           <hr class="mb-12">
+            <h4 class="mb-3">计算结果</h4>
+             <label for="lastName" id = "locX"></label><br>
+             <label for="lastName" id = "locY"></label><br>
+             <label for="lastName" id = "loc"></label>
+        </div>
+      </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2018-2020 smart-coding</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="https://www.neoworld.io/" target="blank">NeoWorld</a></li>
+          <li class="list-inline-item"><a href="#">西部世界|坐标 (-46,154)</a></li>
+           <li class="list-inline-item"><a href="https://bihu.com/article/1188167"  target="blank">使用说明</a></li>
+          <li class="list-inline-item"><a href="https://github.com/smart-coding" target="blank">关于作者</a></li>
+        </ul>
+      </footer>
+      
+      <div id = "rewardme">
+      	<img alt="打赏支持" src="dist/img/rewardme.png" width="200px" height="200px">
+      	<p align="center"> 支持作者:2元</p>
+      </div>
+    </div>
+    <!-- <iframe id = "prox" src="http://140.143.85.73/" style="display: none"></iframe> -->
+    <script src="dist/js/jquery-3.3.1.min.js"></script>
+    <script>
+      /*  $(function() {
+    	  window.location.href="http://www.neoworld.ink";  
+       }) */
+       
+       $(function() {
+           $("#calc").click(function() {
+             var dist_X = $("#dist0").val();
+             var dist_Y = $("#dist1").val();
+             var dist0 = parseFloat(dist_X)/100;
+             var dist1 = parseFloat(dist_Y)/100;
+             console.log("dist0:" + dist0);
+             console.log("dist1:" + dist1);
+             dist0 = Math.pow(dist0, 2);
+             dist1 = Math.pow(dist1, 2);
+             console.log("dist0 squ:" + dist0);
+             console.log("dist1 squ:" + dist1);
+             var locY = (dist0 - dist1 + 900)/60;
+             console.log("locY:" + locY);
+           	var distY = Math.pow(locY, 2);
+           	if (dist0 < distY) {
+           		$("#locX").html("数据输入有误，请确认宝藏探测数据位置！");
+               	$("#locY").html("");
+           		$("#loc").html("");
+           		return false;
+           	}
+           	locX = Math.sqrt(dist0 - distY);
+           	console.log("locX:" + locX);
+           	$("#locX").html("X:" + locX);
+           	$("#locY").html("Y:" + locY);
+           	var loc_X = locX;
+           	var loc_Y = locY;
+           	locX = Math.floor(locX);
+           	locY = Math.floor(locY);
+           	if (locX < 0) {
+           		locX = locX + 1;
+           	}
+           	if (locY < 0) {
+           		locY = locY + 1;
+           	}
+           	$("#loc").html("宝藏在：(" + locX + "," + locY 
+           			+ ")或者(" + (-locX) + "," + locY + ")，快去寻宝吧！");
+           });
+        })
+    </script>
+  </body>
+</html>
